@@ -8,7 +8,9 @@ import {
   Globe, Building2, GraduationCap, ArrowRight, X, Menu,
   Monitor, Shield, Server, Cloud, Zap, TrendingUp,
   BookOpen, Target, BadgeCheck, CreditCard, Headphones, Video,
-  Network, Router, Wifi, Lock, Database, Activity
+  Network, Router, Wifi, Lock, Database, Activity,
+  ShieldCheck, Key, Fingerprint, Eye, Bug, Terminal, Cpu, HardDrive,
+  Cable, Radio, Laptop, Smartphone, Settings, Code, Binary, Webhook
 } from 'lucide-react';
 
 // Types
@@ -672,6 +674,114 @@ const LeadFormModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   );
 };
 
+// Custom Batch Request Modal Component
+const CustomBatchModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {/* Backdrop */}
+          <motion.div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+
+          {/* Modal */}
+          <motion.div
+            className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 z-10"
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          >
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Header */}
+            <div className="text-center mb-6">
+              <div className="w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+                <Users size={28} className="text-amber-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Request Custom Training</h3>
+              <p className="text-gray-500 text-sm">
+                Get a dedicated batch for your team with flexible scheduling, classroom, or 1-on-1 options.
+              </p>
+            </div>
+
+            {/* Form */}
+            <form className="space-y-4">
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="input"
+                required
+              />
+
+              <input
+                type="email"
+                placeholder="Email Address"
+                className="input"
+                required
+              />
+
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                className="input"
+              />
+
+              <select className="input text-gray-500" required>
+                <option value="">Preferred Training Mode</option>
+                <option value="classroom">Classroom Training (In-person)</option>
+                <option value="1on1">1-on-1 Training (Dedicated Instructor)</option>
+                <option value="private-vilt">Private Virtual Batch (Team only)</option>
+                <option value="fly-trainer">Fly-Me-A-Trainer (At your location)</option>
+              </select>
+
+              <select className="input text-gray-500" required>
+                <option value="">Number of Participants</option>
+                <option value="1">Just me (1-on-1)</option>
+                <option value="2-5">2-5 participants</option>
+                <option value="6-10">6-10 participants</option>
+                <option value="10+">10+ participants</option>
+              </select>
+
+              <input
+                type="text"
+                placeholder="Which course(s) are you interested in?"
+                className="input"
+              />
+
+              <button type="submit" className="btn-primary w-full text-lg py-4">
+                Request Custom Quote
+              </button>
+            </form>
+
+            <p className="text-xs text-gray-400 text-center mt-4">
+              We&apos;ll create a customized training plan within 24 hours
+            </p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 // Network Animation Component - Subtle, engaging visual for Cisco learners
 const NetworkVisualization = () => {
   return (
@@ -731,34 +841,99 @@ const NetworkVisualization = () => {
         />
       </svg>
 
-      {/* Floating network icons */}
+      {/* Floating network icons - Quirky and engaging */}
       <motion.div
-        className="absolute top-[15%] left-[8%] text-koenig-blue/20"
+        className="absolute top-[15%] left-[8%] text-[#0694D1]/25"
         animate={{ y: [-5, 5, -5], rotate: [0, 5, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >
         <Router size={32} />
       </motion.div>
       <motion.div
-        className="absolute top-[25%] right-[12%] text-green-500/20"
+        className="absolute top-[25%] right-[12%] text-green-500/25"
         animate={{ y: [5, -5, 5], rotate: [0, -5, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Shield size={28} />
+        <ShieldCheck size={28} />
       </motion.div>
       <motion.div
-        className="absolute bottom-[30%] left-[15%] text-koenig-blue/15"
+        className="absolute bottom-[30%] left-[15%] text-[#0694D1]/20"
         animate={{ y: [-3, 3, -3] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       >
         <Server size={24} />
       </motion.div>
       <motion.div
-        className="absolute bottom-[25%] right-[20%] text-amber-500/20"
+        className="absolute bottom-[25%] right-[20%] text-amber-500/25"
         animate={{ y: [3, -3, 3], rotate: [0, 10, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       >
         <Cloud size={30} />
+      </motion.div>
+
+      {/* Additional quirky icons for networking/security vibe */}
+      <motion.div
+        className="absolute top-[40%] left-[5%] text-purple-500/20"
+        animate={{ y: [-4, 4, -4], x: [-2, 2, -2] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Key size={22} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[10%] right-[25%] text-red-400/20"
+        animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Bug size={20} />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-[40%] right-[8%] text-cyan-500/20"
+        animate={{ y: [3, -3, 3] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Wifi size={26} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[55%] left-[20%] text-indigo-400/20"
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      >
+        <Settings size={24} />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-[15%] left-[30%] text-emerald-500/20"
+        animate={{ y: [-3, 3, -3], scale: [1, 1.05, 1] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Terminal size={22} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[35%] right-[30%] text-orange-400/20"
+        animate={{ y: [2, -2, 2] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Cpu size={20} />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-[35%] right-[35%] text-blue-400/15"
+        animate={{ x: [-2, 2, -2], y: [1, -1, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Database size={18} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[60%] right-[15%] text-pink-400/20"
+        animate={{ scale: [1, 1.15, 1] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Lock size={20} />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-[20%] right-[40%] text-teal-500/15"
+        animate={{ y: [-2, 2, -2], rotate: [-5, 5, -5] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Fingerprint size={24} />
       </motion.div>
     </div>
   );
@@ -1030,7 +1205,7 @@ const CertificationPathway = () => {
 const ScheduleSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedLevel, setSelectedLevel] = useState('All');
-  const [selectedMode, setSelectedMode] = useState('All');
+  const [showCustomRequestModal, setShowCustomRequestModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
   const ref = useRef(null);
@@ -1038,16 +1213,16 @@ const ScheduleSection = () => {
 
   const categories = ['All', 'Enterprise Networking', 'Security', 'Data Center', 'DevNet', 'Service Provider', 'Collaboration'];
   const levels = ['All', 'Associate', 'Professional', 'Expert', 'Specialist'];
-  const modes = ['All', 'Live Online', 'Classroom', '1-on-1'];
+  // Only showing Live Online in filters since all current batches are VILT
+  // Classroom and 1-on-1 available on request
 
   const filteredCourses = ciscoCoursesData.filter(course => {
     const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
     const matchesLevel = selectedLevel === 'All' || course.level === selectedLevel;
-    const matchesMode = selectedMode === 'All' || course.schedules.some(s => s.mode === selectedMode);
     const matchesSearch = searchQuery === '' ||
       course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       course.code.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesLevel && matchesMode && matchesSearch;
+    return matchesCategory && matchesLevel && matchesSearch;
   });
 
   return (
@@ -1100,7 +1275,7 @@ const ScheduleSection = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4 mt-4 pt-4 border-t border-gray-100">
+          <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-gray-100">
             {/* Level Filter */}
             <div className="flex items-center gap-2">
               <span className="text-gray-500 text-sm">Level:</span>
@@ -1117,20 +1292,15 @@ const ScheduleSection = () => {
               </div>
             </div>
 
-            {/* Mode Filter */}
-            <div className="flex items-center gap-2">
-              <span className="text-gray-500 text-sm">Mode:</span>
-              <div className="tab-nav">
-                {modes.map((mode) => (
-                  <button
-                    key={mode}
-                    onClick={() => setSelectedMode(mode)}
-                    className={`tab-item ${selectedMode === mode ? 'active' : ''}`}
-                  >
-                    {mode}
-                  </button>
-                ))}
-              </div>
+            {/* Custom Training Request */}
+            <div className="ml-auto flex items-center gap-2 text-sm">
+              <span className="text-gray-500">Need classroom or 1-on-1 training?</span>
+              <button
+                onClick={() => setShowCustomRequestModal(true)}
+                className="text-[#0694D1] font-medium hover:underline"
+              >
+                Request Custom Batch
+              </button>
             </div>
           </div>
         </motion.div>
@@ -1300,13 +1470,16 @@ const ScheduleSection = () => {
             </div>
           )}
         </div>
+
+        {/* Custom Batch Modal */}
+        <CustomBatchModal isOpen={showCustomRequestModal} onClose={() => setShowCustomRequestModal(false)} />
       </div>
     </section>
   );
 };
 
-// Learning Modes Section
-const LearningModesSection = () => {
+// Learning Modes Section - Updated to focus on premium options
+const LearningModesSection = ({ onRequestCustom }: { onRequestCustom: () => void }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -1320,22 +1493,50 @@ const LearningModesSection = () => {
         >
           <div className="section-divider" />
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-            Flexible Learning Options
+            Training Options for Every Need
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Choose the training format that fits your schedule and learning style
+            Our scheduled batches run as Live Online (VILT). Need something different? We offer premium options for teams and individuals.
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {learningModes.map((mode, index) => (
+          {/* Live Online - Highlighted as default */}
+          <motion.div
+            className="card p-6 text-center border-2 border-[#0694D1] relative"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+          >
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0694D1] text-white text-xs px-3 py-1 rounded-full font-medium">
+              Most Popular
+            </div>
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-blue-50">
+              <Video size={32} className="text-[#0694D1]" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Live Online (VILT)</h3>
+            <p className="text-gray-500 text-sm mb-4">Interactive virtual classrooms with real-time instruction</p>
+            <a href="#schedule" className="text-[#0694D1] text-sm font-medium hover:underline">
+              View Schedule →
+            </a>
+          </motion.div>
+
+          {/* Other modes - Available on request */}
+          {[
+            { icon: Building2, title: 'Classroom', description: 'In-person training at our global centers', color: '#00C853', tag: 'On Request' },
+            { icon: Users, title: '1-on-1 Training', description: 'Dedicated instructor for personalized learning', color: '#FFB300', tag: 'Premium' },
+            { icon: Globe, title: 'Fly-Me-A-Trainer', description: 'Expert trainers at your location worldwide', color: '#FF6B35', tag: 'Enterprise' },
+          ].map((mode, index) => (
             <motion.div
               key={mode.title}
-              className="card p-6 text-center hover:shadow-lg transition-all duration-300"
+              className="card p-6 text-center hover:shadow-lg transition-all duration-300 cursor-pointer group"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: (index + 1) * 0.1 }}
+              onClick={onRequestCustom}
             >
+              <div className="absolute top-3 right-3 bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-medium">
+                {mode.tag}
+              </div>
               <div
                 className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
                 style={{ backgroundColor: `${mode.color}15` }}
@@ -1343,10 +1544,27 @@ const LearningModesSection = () => {
                 <mode.icon size={32} style={{ color: mode.color }} />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">{mode.title}</h3>
-              <p className="text-gray-500 text-sm">{mode.description}</p>
+              <p className="text-gray-500 text-sm mb-4">{mode.description}</p>
+              <span className="text-[#0694D1] text-sm font-medium group-hover:underline">
+                Request Quote →
+              </span>
             </motion.div>
           ))}
         </div>
+
+        {/* CTA for custom training */}
+        <motion.div
+          className="mt-10 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5 }}
+        >
+          <p className="text-gray-600 mb-4">Have a team that needs training? We can create a custom batch just for you.</p>
+          <button onClick={onRequestCustom} className="btn-secondary">
+            <Users size={18} />
+            Request Custom Training
+          </button>
+        </motion.div>
       </div>
     </section>
   );
@@ -1708,6 +1926,7 @@ const FloatingContact = () => {
 // Main Page Component
 export default function CiscoTrainingLanding() {
   const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
+  const [isCustomBatchModalOpen, setIsCustomBatchModalOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-white">
@@ -1715,13 +1934,14 @@ export default function CiscoTrainingLanding() {
       <HeroSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <CertificationPathway />
       <ScheduleSection />
-      <LearningModesSection />
+      <LearningModesSection onRequestCustom={() => setIsCustomBatchModalOpen(true)} />
       <CLCSection />
       <WhyKoenigSection />
       <CTASection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <Footer />
       <FloatingContact />
       <LeadFormModal isOpen={isLeadFormOpen} onClose={() => setIsLeadFormOpen(false)} />
+      <CustomBatchModal isOpen={isCustomBatchModalOpen} onClose={() => setIsCustomBatchModalOpen(false)} />
     </main>
   );
 }
