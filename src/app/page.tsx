@@ -841,184 +841,153 @@ const NetworkVisualization = () => {
         />
       </svg>
 
-      {/* Floating network icons - Quirky and engaging */}
+      {/* Subtle floating network icons - Professional, monochromatic blue */}
       <motion.div
-        className="absolute top-[15%] left-[8%] text-[#0694D1]/25"
-        animate={{ y: [-5, 5, -5], rotate: [0, 5, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Router size={32} />
-      </motion.div>
-      <motion.div
-        className="absolute top-[25%] right-[12%] text-green-500/25"
-        animate={{ y: [5, -5, 5], rotate: [0, -5, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <ShieldCheck size={28} />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[30%] left-[15%] text-[#0694D1]/20"
-        animate={{ y: [-3, 3, -3] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Server size={24} />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[25%] right-[20%] text-amber-500/25"
-        animate={{ y: [3, -3, 3], rotate: [0, 10, 0] }}
+        className="absolute top-[18%] left-[8%] text-[#0694D1]/[0.08]"
+        animate={{ y: [-4, 4, -4] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Cloud size={30} />
+        <Router size={28} />
       </motion.div>
-
-      {/* Additional quirky icons for networking/security vibe */}
       <motion.div
-        className="absolute top-[40%] left-[5%] text-purple-500/20"
-        animate={{ y: [-4, 4, -4], x: [-2, 2, -2] }}
+        className="absolute top-[22%] right-[10%] text-[#0694D1]/[0.08]"
+        animate={{ y: [4, -4, 4] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Shield size={26} />
+      </motion.div>
+      <motion.div
+        className="absolute bottom-[32%] left-[12%] text-[#0694D1]/[0.06]"
+        animate={{ y: [-3, 3, -3] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Key size={22} />
+        <Server size={22} />
       </motion.div>
       <motion.div
-        className="absolute top-[10%] right-[25%] text-red-400/20"
-        animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Bug size={20} />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[40%] right-[8%] text-cyan-500/20"
+        className="absolute bottom-[28%] right-[15%] text-[#0694D1]/[0.08]"
         animate={{ y: [3, -3, 3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Wifi size={26} />
-      </motion.div>
-      <motion.div
-        className="absolute top-[55%] left-[20%] text-indigo-400/20"
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        <Settings size={24} />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[15%] left-[30%] text-emerald-500/20"
-        animate={{ y: [-3, 3, -3], scale: [1, 1.05, 1] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Terminal size={22} />
-      </motion.div>
-      <motion.div
-        className="absolute top-[35%] right-[30%] text-orange-400/20"
-        animate={{ y: [2, -2, 2] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Cpu size={20} />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[35%] right-[35%] text-blue-400/15"
-        animate={{ x: [-2, 2, -2], y: [1, -1, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Database size={18} />
-      </motion.div>
-      <motion.div
-        className="absolute top-[60%] right-[15%] text-pink-400/20"
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Lock size={20} />
-      </motion.div>
-      <motion.div
-        className="absolute bottom-[20%] right-[40%] text-teal-500/15"
-        animate={{ y: [-2, 2, -2], rotate: [-5, 5, -5] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Fingerprint size={24} />
+        <Cloud size={24} />
       </motion.div>
     </div>
   );
 };
 
-// Header Component
+// Top Contact Strip - Matching Koenig's style
+const TopStrip = () => {
+  return (
+    <div className="bg-[#0694D1] text-white py-2 text-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-6">
+          <a href="https://wa.me/917042593729" className="flex items-center gap-2 hover:text-blue-100 transition-colors">
+            <MessageCircle size={14} />
+            <span className="hidden sm:inline">+91-704-259-3729 (Chat)</span>
+          </a>
+          <a href="mailto:info@koenig-solutions.com" className="flex items-center gap-2 hover:text-blue-100 transition-colors">
+            <Mail size={14} />
+            <span className="hidden sm:inline">info@koenig-solutions.com</span>
+          </a>
+        </div>
+        <div className="flex items-center gap-2 text-blue-100">
+          <Zap size={14} />
+          <span className="text-xs sm:text-sm">Use Cisco Learning Credits (CLCs) for training</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Header Component - Matching Koenig's style
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-white/80 backdrop-blur-sm'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center">
-              <span className="text-white font-bold text-lg">K</span>
-            </div>
-            <div>
-              <div className="text-gray-800 font-bold text-lg tracking-tight">KOENIG</div>
-              <div className="text-[10px] text-[#0694D1] font-medium tracking-wider">CISCO PLATINUM PARTNER</div>
-            </div>
-          </div>
-
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8">
-            <a href="#courses" className="text-gray-600 hover:text-[#0694D1] transition-colors text-sm font-medium">Courses</a>
-            <a href="#schedule" className="text-gray-600 hover:text-[#0694D1] transition-colors text-sm font-medium">Schedule</a>
-            <a href="#paths" className="text-gray-600 hover:text-[#0694D1] transition-colors text-sm font-medium">Certification Paths</a>
-            <a href="#enterprise" className="text-gray-600 hover:text-[#0694D1] transition-colors text-sm font-medium">Enterprise</a>
-          </nav>
-
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a href="tel:+18046251567" className="flex items-center gap-2 text-gray-600 hover:text-[#0694D1] transition-colors text-sm">
-              <Phone size={16} />
-              <span>+1 (604) 825-1567</span>
+    <>
+      <TopStrip />
+      <header
+        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-md' : 'bg-white'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            {/* Logo */}
+            <a href="https://www.koenig-solutions.com" className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center">
+                <span className="text-white font-bold text-lg">K</span>
+              </div>
+              <div>
+                <div className="text-gray-800 font-bold text-lg tracking-tight">KOENIG</div>
+                <div className="text-[9px] text-gray-500 font-medium tracking-wider">SOLUTIONS</div>
+              </div>
             </a>
-            <button className="btn-primary">
-              <Calendar size={16} />
-              Book a Session
+
+            {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-6">
+              <a href="#schedule" className="text-gray-700 hover:text-[#0694D1] transition-colors text-sm font-medium">Schedule</a>
+              <a href="#paths" className="text-gray-700 hover:text-[#0694D1] transition-colors text-sm font-medium">Certifications</a>
+              <a href="#enterprise" className="text-gray-700 hover:text-[#0694D1] transition-colors text-sm font-medium">Enterprise</a>
+              <a href="https://www.koenig-solutions.com/learning-options" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#0694D1] transition-colors text-sm font-medium">Learning Options</a>
+              <a href="https://www.koenig-solutions.com/about-us" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#0694D1] transition-colors text-sm font-medium">About Koenig</a>
+            </nav>
+
+            {/* CTA Buttons */}
+            <div className="hidden lg:flex items-center gap-3">
+              <a href="tel:+16048251567" className="flex items-center gap-2 text-gray-600 hover:text-[#0694D1] transition-colors text-sm">
+                <Phone size={14} />
+                <span>+1 (604) 825-1567</span>
+              </a>
+              <a href="#schedule" className="btn-primary text-sm px-4 py-2">
+                View Schedule
+              </a>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="lg:hidden p-2 text-gray-700"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-2 text-gray-700"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            className="lg:hidden bg-white border-t border-gray-100"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            <div className="px-4 py-6 space-y-4">
-              <a href="#courses" className="block text-gray-700 py-2 font-medium">Courses</a>
-              <a href="#schedule" className="block text-gray-700 py-2 font-medium">Schedule</a>
-              <a href="#paths" className="block text-gray-700 py-2 font-medium">Certification Paths</a>
-              <a href="#enterprise" className="block text-gray-700 py-2 font-medium">Enterprise</a>
-              <button className="btn-primary w-full mt-4">Book a Session</button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              className="lg:hidden bg-white border-t border-gray-100"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+            >
+              <div className="px-4 py-6 space-y-4">
+                <a href="#schedule" className="block text-gray-700 py-2 font-medium">Schedule</a>
+                <a href="#paths" className="block text-gray-700 py-2 font-medium">Certifications</a>
+                <a href="#enterprise" className="block text-gray-700 py-2 font-medium">Enterprise</a>
+                <a href="https://www.koenig-solutions.com/learning-options" className="block text-gray-700 py-2 font-medium">Learning Options</a>
+                <a href="https://www.koenig-solutions.com/about-us" className="block text-gray-700 py-2 font-medium">About Koenig</a>
+                <div className="pt-4 border-t border-gray-100">
+                  <a href="tel:+16048251567" className="flex items-center gap-2 text-gray-600 mb-4">
+                    <Phone size={16} />
+                    <span>+1 (604) 825-1567</span>
+                  </a>
+                  <a href="#schedule" className="btn-primary w-full text-center">View Schedule</a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </>
   );
 };
 
@@ -1816,91 +1785,163 @@ const CTASection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
   );
 };
 
-// Footer
+// Footer - Matching Koenig's professional style
 const Footer = () => {
+  const globalOffices = [
+    { country: 'USA', city: 'New York', phone: '+1 (604) 825-1567', address: '477 Madison Avenue, 6th floor, New York City, NY 10022' },
+    { country: 'India', city: 'New Delhi', phone: '+91 8095-073-333', address: 'B-39, Plot No. 70, KLJ Complex-1, Moti Nagar, New Delhi 110015' },
+    { country: 'UK', city: 'London', phone: '+44 7786 378779', address: 'Level 17, Dashwood House, 69 Old Broad Street, London EC2M 1QS' },
+    { country: 'UAE', city: 'Dubai', phone: '+971 524 856 717', address: 'Block 3, Office G10, Dubai Knowledge, Dubai 503220' },
+    { country: 'Australia', city: 'Sydney', phone: '+61 2 9099 5670', address: 'Level 12, 95 Pitt Street, Sydney, NSW 2000' },
+    { country: 'Canada', city: 'Vancouver', phone: '+1 (604) 825-1567', address: '#1608-271 Francis Way, New Westminster, BC V3L0H2' },
+  ];
+
   return (
-    <footer className="bg-gray-900 text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center">
-                <span className="text-white font-bold text-lg">K</span>
-              </div>
-              <div>
-                <div className="text-white font-bold text-lg">KOENIG</div>
-                <div className="text-[10px] text-[#0694D1]">SOLUTIONS</div>
-              </div>
+    <footer className="bg-gray-900 text-white">
+      {/* Partner Badges Section */}
+      <div className="border-b border-gray-800 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8">
+            <div className="flex items-center gap-2 text-gray-400">
+              <Award size={20} className="text-[#0694D1]" />
+              <span className="text-sm">Cisco Platinum Learning Partner</span>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
-              Microsoft Partner of the Year 2025. World&apos;s leading IT training company with 31+ years of excellence.
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={14} fill="currentColor" />
-                ))}
-              </div>
-              <span className="text-gray-400 text-sm">4.7/5 (500+ reviews)</span>
+            <div className="flex items-center gap-2 text-gray-400">
+              <Award size={20} className="text-amber-500" />
+              <span className="text-sm">Microsoft Partner of the Year 2025</span>
             </div>
-          </div>
-
-          {/* Cisco Courses */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Cisco Courses</h4>
-            <ul className="space-y-2">
-              {['CCNA Training', 'CCNP Enterprise', 'CCNP Security', 'CCIE Enterprise', 'DevNet Associate', 'Cisco SD-WAN'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">{item}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {['Training Schedule', 'Enterprise Training', 'CLC Redemption', 'Our Instructors', 'Success Stories', 'Contact Us'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">{item}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Global Offices</h4>
-            <ul className="space-y-3">
-              {[
-                { country: 'USA/Canada', phone: '+1 (604) 825-1567' },
-                { country: 'India', phone: '+91 8095-073-333' },
-                { country: 'UK', phone: '+44 7786 378779' },
-                { country: 'UAE', phone: '+971 524 856 717' },
-                { country: 'Australia', phone: '+61 2 9099 5670' },
-              ].map((office) => (
-                <li key={office.country} className="flex items-center gap-2 text-sm">
-                  <MapPin size={14} className="text-[#0694D1] flex-shrink-0" />
-                  <span className="text-gray-400">{office.country}:</span>
-                  <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="text-white hover:text-[#0694D1] transition-colors">
-                    {office.phone}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-center gap-2 text-gray-400">
+              <Star size={20} className="text-amber-400" />
+              <span className="text-sm">31+ Years of Excellence</span>
+            </div>
+            <div className="flex items-center gap-2 text-gray-400">
+              <Globe size={20} className="text-green-500" />
+              <span className="text-sm">60+ Countries Served</span>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} Koenig Solutions. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Terms of Service</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Refund Policy</a>
+      {/* Main Footer Content */}
+      <div className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
+            {/* Brand */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">K</span>
+                </div>
+                <div>
+                  <div className="text-white font-bold text-lg">KOENIG SOLUTIONS</div>
+                  <div className="text-xs text-gray-500">Pvt. Ltd.</div>
+                </div>
+              </div>
+              <p className="text-gray-400 text-sm mb-4 max-w-sm">
+                World&apos;s leading IT training company. Official Cisco Platinum Learning Partner offering authorized certification training globally.
+              </p>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" />
+                  ))}
+                </div>
+                <span className="text-gray-400 text-sm">4.7/5 (500+ reviews)</span>
+              </div>
+              <div className="flex items-center gap-4 text-gray-400">
+                <a href="https://www.facebook.com/koenigsolutions" target="_blank" rel="noopener noreferrer" className="hover:text-[#0694D1]">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://twitter.com/koikisolve" target="_blank" rel="noopener noreferrer" className="hover:text-[#0694D1]">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/koenig-solutions" target="_blank" rel="noopener noreferrer" className="hover:text-[#0694D1]">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://www.youtube.com/user/koikisolve" target="_blank" rel="noopener noreferrer" className="hover:text-[#0694D1]">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Cisco Courses */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Cisco Courses</h4>
+              <ul className="space-y-2">
+                {['CCNA Training', 'CCNP Enterprise', 'CCNP Security', 'CCNP Data Center', 'CCIE Enterprise', 'DevNet Associate'].map((item) => (
+                  <li key={item}>
+                    <a href="#schedule" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">{item}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li><a href="#schedule" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">Training Schedule</a></li>
+                <li><a href="#enterprise" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">Enterprise Training</a></li>
+                <li><a href="#enterprise" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">CLC Redemption</a></li>
+                <li><a href="https://www.koenig-solutions.com/learning-options" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">Learning Options</a></li>
+                <li><a href="https://www.koenig-solutions.com/about-us" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">About Us</a></li>
+                <li><a href="https://www.koenig-solutions.com/student-feedback" className="text-gray-400 hover:text-[#0694D1] transition-colors text-sm">Student Feedback</a></li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Contact Us</h4>
+              <ul className="space-y-3">
+                <li>
+                  <a href="mailto:info@koenig-solutions.com" className="flex items-center gap-2 text-gray-400 hover:text-[#0694D1] transition-colors text-sm">
+                    <Mail size={14} />
+                    info@koenig-solutions.com
+                  </a>
+                </li>
+                <li>
+                  <a href="https://wa.me/917042593729" className="flex items-center gap-2 text-gray-400 hover:text-[#0694D1] transition-colors text-sm">
+                    <MessageCircle size={14} />
+                    WhatsApp Chat
+                  </a>
+                </li>
+              </ul>
+              <h4 className="text-white font-semibold mt-6 mb-3">Call Us</h4>
+              <ul className="space-y-2">
+                {[
+                  { region: 'USA/Canada', phone: '+1 (604) 825-1567' },
+                  { region: 'India', phone: '+91 8095-073-333' },
+                  { region: 'UK', phone: '+44 7786 378779' },
+                  { region: 'UAE', phone: '+971 524 856 717' },
+                ].map((item) => (
+                  <li key={item.region}>
+                    <a href={`tel:${item.phone.replace(/\s/g, '')}`} className="text-gray-400 hover:text-white transition-colors text-xs">
+                      <span className="text-gray-500">{item.region}:</span> {item.phone}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-gray-800 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-gray-500 text-sm">
+              &copy; {new Date().getFullYear()} Koenig Solutions Pvt. Ltd. All rights reserved.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+              <a href="https://www.koenig-solutions.com/privacy-policy" className="text-gray-500 hover:text-white transition-colors">Privacy Policy</a>
+              <span className="text-gray-700">|</span>
+              <a href="https://www.koenig-solutions.com/terms-of-use" className="text-gray-500 hover:text-white transition-colors">Terms of Use</a>
+              <span className="text-gray-700">|</span>
+              <a href="https://www.koenig-solutions.com/refund-policy" className="text-gray-500 hover:text-white transition-colors">Refund Policy</a>
+              <span className="text-gray-700">|</span>
+              <a href="https://www.koenig-solutions.com/happiness-guarantee" className="text-gray-500 hover:text-white transition-colors">Happiness Guarantee</a>
+            </div>
           </div>
         </div>
       </div>
