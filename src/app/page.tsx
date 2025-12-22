@@ -1170,6 +1170,50 @@ const CertificationPathway = () => {
   );
 };
 
+// Date Filter Helper Functions
+const getDateRangeLabel = (startDate: string, endDate: string) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  return `${start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+};
+
+const getQuickDateRange = (option: string): { start: Date; end: Date } | null => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  switch (option) {
+    case 'This Week': {
+      const endOfWeek = new Date(today);
+      endOfWeek.setDate(today.getDate() + (7 - today.getDay()));
+      return { start: today, end: endOfWeek };
+    }
+    case 'Next Week': {
+      const startOfNextWeek = new Date(today);
+      startOfNextWeek.setDate(today.getDate() + (7 - today.getDay()) + 1);
+      const endOfNextWeek = new Date(startOfNextWeek);
+      endOfNextWeek.setDate(startOfNextWeek.getDate() + 6);
+      return { start: startOfNextWeek, end: endOfNextWeek };
+    }
+    case 'This Month': {
+      const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      return { start: today, end: endOfMonth };
+    }
+    case 'Next Month': {
+      const startOfNextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+      const endOfNextMonth = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+      return { start: startOfNextMonth, end: endOfNextMonth };
+    }
+    case 'Jan 2026': {
+      return { start: new Date('2026-01-01'), end: new Date('2026-01-31') };
+    }
+    case 'Feb 2026': {
+      return { start: new Date('2026-02-01'), end: new Date('2026-02-28') };
+    }
+    default:
+      return null;
+  }
+};
+
 // Schedule Section
 const ScheduleSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -1177,13 +1221,46 @@ const ScheduleSection = () => {
   const [showCustomRequestModal, setShowCustomRequestModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
+  const [selectedDateFilter, setSelectedDateFilter] = useState('All Dates');
+  const [customDateStart, setCustomDateStart] = useState('');
+  const [customDateEnd, setCustomDateEnd] = useState('');
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const categories = ['All', 'Enterprise Networking', 'Security', 'Data Center', 'DevNet', 'Service Provider', 'Collaboration'];
   const levels = ['All', 'Associate', 'Professional', 'Expert', 'Specialist'];
+  const dateQuickFilters = ['All Dates', 'Jan 2026', 'Feb 2026'];
   // Only showing Live Online in filters since all current batches are VILT
   // Classroom and 1-on-1 available on request
+
+  // Check if a course has schedules within the selected date range
+  const courseMatchesDateFilter = (course: Course): boolean => {
+    if (selectedDateFilter === 'All Dates' && !customDateStart && !customDateEnd) {
+      return true;
+    }
+
+    let filterStart: Date | null = null;
+    let filterEnd: Date | null = null;
+
+    if (customDateStart && customDateEnd) {
+      filterStart = new Date(customDateStart);
+      filterEnd = new Date(customDateEnd);
+    } else if (selectedDateFilter !== 'All Dates') {
+      const range = getQuickDateRange(selectedDateFilter);
+      if (range) {
+        filterStart = range.start;
+        filterEnd = range.end;
+      }
+    }
+
+    if (!filterStart || !filterEnd) return true;
+
+    return course.schedules.some(schedule => {
+      const scheduleStart = new Date(schedule.startDate);
+      return scheduleStart >= filterStart! && scheduleStart <= filterEnd!;
+    });
+  };
 
   const filteredCourses = ciscoCoursesData.filter(course => {
     const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
@@ -1191,8 +1268,16 @@ const ScheduleSection = () => {
     const matchesSearch = searchQuery === '' ||
       course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       course.code.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesLevel && matchesSearch;
+    const matchesDate = courseMatchesDateFilter(course);
+    return matchesCategory && matchesLevel && matchesSearch && matchesDate;
   });
+
+  const clearDateFilter = () => {
+    setSelectedDateFilter('All Dates');
+    setCustomDateStart('');
+    setCustomDateEnd('');
+    setShowDatePicker(false);
+  };
 
   return (
     <section id="schedule" ref={ref} className="py-20 bg-white">
@@ -1271,6 +1356,108 @@ const ScheduleSection = () => {
                 Request Custom Batch
               </button>
             </div>
+          </div>
+
+          {/* Date Filter Row */}
+          <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+            <div className="flex items-center gap-2">
+              <Calendar size={16} className="text-gray-400" />
+              <span className="text-gray-500 text-sm">When are you free?</span>
+            </div>
+
+            {/* Quick Date Filters */}
+            <div className="flex flex-wrap gap-2">
+              {dateQuickFilters.map((dateOption) => (
+                <button
+                  key={dateOption}
+                  onClick={() => {
+                    setSelectedDateFilter(dateOption);
+                    setCustomDateStart('');
+                    setCustomDateEnd('');
+                    setShowDatePicker(false);
+                  }}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    selectedDateFilter === dateOption && !customDateStart
+                      ? 'bg-[#0694D1] text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {dateOption}
+                </button>
+              ))}
+
+              {/* Custom Date Range Button */}
+              <button
+                onClick={() => setShowDatePicker(!showDatePicker)}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-1 ${
+                  customDateStart && customDateEnd
+                    ? 'bg-[#0694D1] text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Calendar size={14} />
+                {customDateStart && customDateEnd
+                  ? `${new Date(customDateStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${new Date(customDateEnd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
+                  : 'Pick Dates'
+                }
+              </button>
+
+              {/* Clear Filter */}
+              {(selectedDateFilter !== 'All Dates' || customDateStart) && (
+                <button
+                  onClick={clearDateFilter}
+                  className="px-2 py-1.5 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+
+            {/* Custom Date Picker Dropdown */}
+            <AnimatePresence>
+              {showDatePicker && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="w-full mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200"
+                >
+                  <div className="flex flex-wrap items-end gap-4">
+                    <div className="flex-1 min-w-[150px]">
+                      <label className="block text-xs text-gray-500 mb-1">From</label>
+                      <input
+                        type="date"
+                        value={customDateStart}
+                        onChange={(e) => {
+                          setCustomDateStart(e.target.value);
+                          setSelectedDateFilter('Custom');
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#0694D1] focus:border-transparent"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-[150px]">
+                      <label className="block text-xs text-gray-500 mb-1">To</label>
+                      <input
+                        type="date"
+                        value={customDateEnd}
+                        onChange={(e) => {
+                          setCustomDateEnd(e.target.value);
+                          setSelectedDateFilter('Custom');
+                        }}
+                        min={customDateStart}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#0694D1] focus:border-transparent"
+                      />
+                    </div>
+                    <button
+                      onClick={() => setShowDatePicker(false)}
+                      className="px-4 py-2 bg-[#0694D1] text-white text-sm font-medium rounded-lg hover:bg-[#0576A8] transition-colors"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
 
