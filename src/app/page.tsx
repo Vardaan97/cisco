@@ -539,7 +539,7 @@ const certificationPaths = [
 
 // Stats
 const stats = [
-  { value: '31+', label: 'Years Experience', icon: Award },
+  { value: '32+', label: 'Years Experience', icon: Award },
   { value: '500+', label: 'Reviews (4.7)', icon: Star },
   { value: '60+', label: 'Countries Served', icon: Globe },
   { value: '100K+', label: 'Professionals Trained', icon: Users },
@@ -994,21 +994,26 @@ const Header = () => {
 // Hero Section
 const HeroSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-center pt-8 overflow-hidden">
       <NetworkVisualization />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Partner Badge */}
-            <div className="partner-badge mb-6">
-              <Award size={16} />
-              <span>Cisco Platinum Learning Partner 2024</span>
+            {/* Cisco Platinum Partner Badge - Prominent */}
+            <div className="inline-flex items-center gap-3 px-5 py-3 bg-gradient-to-r from-[#0694D1]/10 to-[#049FD9]/10 border-2 border-[#0694D1]/30 rounded-full mb-6">
+              <div className="w-10 h-10 rounded-full bg-[#0694D1] flex items-center justify-center">
+                <Award size={20} className="text-white" />
+              </div>
+              <div>
+                <div className="text-[#0694D1] font-bold text-sm tracking-wide">CISCO PLATINUM</div>
+                <div className="text-gray-600 text-xs">Learning Partner 2024</div>
+              </div>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
@@ -1225,12 +1230,18 @@ const ScheduleSection = () => {
   const [customDateStart, setCustomDateStart] = useState('');
   const [customDateEnd, setCustomDateEnd] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDuration, setSelectedDuration] = useState('All');
+  const [selectedTimezone, setSelectedTimezone] = useState('All');
+  const [selectedCLCRange, setSelectedCLCRange] = useState('All');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const categories = ['All', 'Enterprise Networking', 'Security', 'Data Center', 'DevNet', 'Service Provider', 'Collaboration'];
   const levels = ['All', 'Associate', 'Professional', 'Expert', 'Specialist'];
   const dateQuickFilters = ['All Dates', 'Jan 2026', 'Feb 2026'];
+  const durations = ['All', '3 Days', '4 Days', '5 Days', '8 Days'];
+  const timezones = ['All', 'IST', 'AEDT'];
+  const clcRanges = ['All', '24-32 CLCs', '40 CLCs', '48-64 CLCs'];
   // Only showing Live Online in filters since all current batches are VILT
   // Classroom and 1-on-1 available on request
 
@@ -1262,6 +1273,30 @@ const ScheduleSection = () => {
     });
   };
 
+  // Check if course matches duration filter
+  const courseMatchesDuration = (course: Course): boolean => {
+    if (selectedDuration === 'All') return true;
+    return course.duration === selectedDuration;
+  };
+
+  // Check if course has schedules in selected timezone
+  const courseMatchesTimezone = (course: Course): boolean => {
+    if (selectedTimezone === 'All') return true;
+    return course.schedules.some(schedule => schedule.timezone === selectedTimezone);
+  };
+
+  // Check if course matches CLC range
+  const courseMatchesCLCRange = (course: Course): boolean => {
+    if (selectedCLCRange === 'All') return true;
+    const clc = course.clcCredits;
+    switch (selectedCLCRange) {
+      case '24-32 CLCs': return clc >= 24 && clc <= 32;
+      case '40 CLCs': return clc === 40;
+      case '48-64 CLCs': return clc >= 48 && clc <= 64;
+      default: return true;
+    }
+  };
+
   const filteredCourses = ciscoCoursesData.filter(course => {
     const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
     const matchesLevel = selectedLevel === 'All' || course.level === selectedLevel;
@@ -1269,7 +1304,10 @@ const ScheduleSection = () => {
       course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       course.code.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDate = courseMatchesDateFilter(course);
-    return matchesCategory && matchesLevel && matchesSearch && matchesDate;
+    const matchesDuration = courseMatchesDuration(course);
+    const matchesTimezone = courseMatchesTimezone(course);
+    const matchesCLC = courseMatchesCLCRange(course);
+    return matchesCategory && matchesLevel && matchesSearch && matchesDate && matchesDuration && matchesTimezone && matchesCLC;
   });
 
   const clearDateFilter = () => {
@@ -1459,6 +1497,87 @@ const ScheduleSection = () => {
               )}
             </AnimatePresence>
           </div>
+
+          {/* Additional Filters Row */}
+          <div className="flex flex-wrap items-center gap-6 mt-4 pt-4 border-t border-gray-100">
+            {/* Duration Filter */}
+            <div className="flex items-center gap-2">
+              <Clock size={16} className="text-gray-400" />
+              <span className="text-gray-500 text-sm">Duration:</span>
+              <div className="flex flex-wrap gap-1">
+                {durations.map((duration) => (
+                  <button
+                    key={duration}
+                    onClick={() => setSelectedDuration(duration)}
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                      selectedDuration === duration
+                        ? 'bg-[#0694D1] text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {duration}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Timezone Filter */}
+            <div className="flex items-center gap-2">
+              <Globe size={16} className="text-gray-400" />
+              <span className="text-gray-500 text-sm">Timezone:</span>
+              <div className="flex flex-wrap gap-1">
+                {timezones.map((tz) => (
+                  <button
+                    key={tz}
+                    onClick={() => setSelectedTimezone(tz)}
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                      selectedTimezone === tz
+                        ? 'bg-[#0694D1] text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {tz}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CLC Range Filter */}
+            <div className="flex items-center gap-2">
+              <CreditCard size={16} className="text-gray-400" />
+              <span className="text-gray-500 text-sm">CLCs:</span>
+              <div className="flex flex-wrap gap-1">
+                {clcRanges.map((range) => (
+                  <button
+                    key={range}
+                    onClick={() => setSelectedCLCRange(range)}
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                      selectedCLCRange === range
+                        ? 'bg-[#0694D1] text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {range}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Clear All Filters */}
+            {(selectedDuration !== 'All' || selectedTimezone !== 'All' || selectedCLCRange !== 'All') && (
+              <button
+                onClick={() => {
+                  setSelectedDuration('All');
+                  setSelectedTimezone('All');
+                  setSelectedCLCRange('All');
+                }}
+                className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1"
+              >
+                <X size={12} />
+                Clear Filters
+              </button>
+            )}
+          </div>
         </motion.div>
 
         {/* Course List */}
@@ -1500,11 +1619,6 @@ const ScheduleSection = () => {
                           <Clock size={14} className="text-[#0694D1]" />
                           {course.duration}
                         </div>
-                      </div>
-
-                      <div className="text-center">
-                        <div className="text-xs text-gray-400 mb-1">Price</div>
-                        <div className="price-tag">${course.price.toLocaleString()}</div>
                       </div>
 
                       <div className="text-center">
@@ -1745,9 +1859,12 @@ const CLCSection = () => {
               <span>Cisco Learning Credits Accepted</span>
             </div>
 
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Redeem Your Learning Credits
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+              Master Cisco Certification
             </h2>
+            <h3 className="text-2xl lg:text-3xl font-semibold text-[#0694D1] mb-6">
+              Through Cisco Learning Credits
+            </h3>
 
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">
               As a Cisco Platinum Learning Partner, Koenig Solutions accepts Cisco Learning Credits (CLCs)
@@ -1756,7 +1873,7 @@ const CLCSection = () => {
 
             <ul className="space-y-4 mb-8">
               {[
-                'Each CLC = $100 value for training',
+                'Use CLCs to pay for any Cisco authorized course',
                 'Valid for 1 year from issue date',
                 'Use for ILT, virtual, or on-demand training',
                 'Team Captain approval workflow supported'
@@ -1787,19 +1904,35 @@ const CLCSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="card-elevated p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <Building2 size={24} className="text-[#0694D1]" />
-                Enterprise Training Inquiry
+            <div className="card-elevated p-8 relative overflow-hidden">
+              {/* Premium indicator */}
+              <div className="absolute top-0 right-0 bg-gradient-to-l from-[#0694D1] to-[#049FD9] text-white text-xs font-semibold px-4 py-1.5 rounded-bl-lg">
+                Priority Response
+              </div>
+
+              <h3 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center">
+                  <Building2 size={24} className="text-white" />
+                </div>
+                Enterprise Training
               </h3>
+              <p className="text-gray-500 text-sm mb-6">Get a customized training proposal for your team</p>
 
               <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="input"
-                  required
-                />
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    className="input"
+                    required
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    className="input"
+                    required
+                  />
+                </div>
 
                 <input
                   type="email"
@@ -1808,15 +1941,22 @@ const CLCSection = () => {
                   required
                 />
 
-                <input
-                  type="text"
-                  placeholder="Company Name"
-                  className="input"
-                  required
-                />
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="Company Name"
+                    className="input"
+                    required
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Phone Number"
+                    className="input"
+                  />
+                </div>
 
                 <select className="input text-gray-500" required>
-                  <option value="">How many people need training?</option>
+                  <option value="">Team Size</option>
                   <option value="2-5">2-5 learners</option>
                   <option value="6-10">6-10 learners</option>
                   <option value="11-25">11-25 learners</option>
@@ -1825,20 +1965,38 @@ const CLCSection = () => {
                 </select>
 
                 <select className="input text-gray-500">
-                  <option value="">Do you have Cisco Learning Credits?</option>
-                  <option value="yes">Yes, we have CLCs to redeem</option>
-                  <option value="no">No, we&apos;ll pay directly</option>
-                  <option value="interested">Interested in purchasing CLCs</option>
+                  <option value="">Payment Method</option>
+                  <option value="clc">Cisco Learning Credits (CLCs)</option>
+                  <option value="direct">Direct Payment / Invoice</option>
+                  <option value="po">Purchase Order</option>
                 </select>
 
-                <button type="submit" className="btn-primary w-full text-lg py-4">
-                  Get Enterprise Quote
+                <textarea
+                  placeholder="Which courses or certifications are you interested in? (Optional)"
+                  className="input min-h-[80px] resize-none"
+                  rows={3}
+                />
+
+                <button type="submit" className="btn-primary w-full text-lg py-4 group">
+                  <span>Get Custom Quote</span>
+                  <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>
 
-              <p className="text-xs text-gray-400 text-center mt-4">
-                Our enterprise team will respond within 24 hours
-              </p>
+              <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <CheckCircle size={14} className="text-green-500" />
+                  <span>24hr Response</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <CheckCircle size={14} className="text-green-500" />
+                  <span>No Obligation</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <CheckCircle size={14} className="text-green-500" />
+                  <span>CLCs Accepted</span>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -1994,12 +2152,8 @@ const Footer = () => {
               <span className="text-sm">Cisco Platinum Learning Partner</span>
             </div>
             <div className="flex items-center gap-2 text-gray-400">
-              <Award size={20} className="text-amber-500" />
-              <span className="text-sm">Microsoft Partner of the Year 2025</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-400">
               <Star size={20} className="text-amber-400" />
-              <span className="text-sm">31+ Years of Excellence</span>
+              <span className="text-sm">32+ Years of Excellence</span>
             </div>
             <div className="flex items-center gap-2 text-gray-400">
               <Globe size={20} className="text-green-500" />
