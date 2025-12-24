@@ -569,7 +569,7 @@ const getLevelBadgeClass = (level: string) => {
   }
 };
 
-// Lead Form Modal Component
+// Lead Form Modal Component - Optimized for PPC conversions
 const LeadFormModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   if (!isOpen) return null;
 
@@ -609,64 +609,72 @@ const LeadFormModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
             {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
-                <MessageCircle size={28} className="text-[#0694D1]" />
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center mx-auto mb-4">
+                <Award size={32} className="text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Talk to an Advisor</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Get Your Training Quote</h3>
               <p className="text-gray-500 text-sm">
-                Get personalized guidance on the right Cisco certification path for your career goals.
+                Cisco Platinum Partner • CLCs Accepted • Guaranteed Dates
               </p>
             </div>
 
-            {/* Form */}
+            {/* Form - Optimized for conversions */}
             <form className="space-y-4">
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder="Full Name *"
                 className="input"
                 required
               />
 
               <input
                 type="email"
-                placeholder="Email Address"
+                placeholder="Work Email *"
                 className="input"
                 required
               />
 
               <input
                 type="tel"
-                placeholder="Phone Number"
+                placeholder="Phone Number *"
                 className="input"
+                required
               />
 
               <select className="input text-gray-500" required>
-                <option value="">Which certification interests you?</option>
-                <option value="ccna">CCNA - Getting Started</option>
-                <option value="ccnp-enterprise">CCNP Enterprise</option>
-                <option value="ccnp-security">CCNP Security</option>
-                <option value="ccnp-datacenter">CCNP Data Center</option>
+                <option value="">Training Interest *</option>
+                <option value="ccna">CCNA Certification</option>
+                <option value="ccnp">CCNP (Enterprise/Security/DC)</option>
                 <option value="ccie">CCIE Certification</option>
-                <option value="devnet">DevNet (Automation)</option>
-                <option value="not-sure">Not sure yet</option>
+                <option value="devnet">DevNet / Automation</option>
+                <option value="clc-redemption">Redeem Cisco Learning Credits</option>
+                <option value="team-training">Team / Enterprise Training</option>
               </select>
 
               <select className="input text-gray-500">
-                <option value="">When are you looking to train?</option>
-                <option value="immediate">Within 2 weeks</option>
-                <option value="1month">Within 1 month</option>
-                <option value="3months">Within 3 months</option>
-                <option value="exploring">Just exploring options</option>
+                <option value="">Do you have CLCs?</option>
+                <option value="yes-clc">Yes, I have CLCs to redeem</option>
+                <option value="no-clc">No, direct payment</option>
+                <option value="company-clc">My company has CLCs</option>
               </select>
 
-              <button type="submit" className="btn-primary w-full text-lg py-4">
-                Get Free Consultation
+              <button type="submit" className="btn-primary w-full text-lg py-4 group">
+                <span>Get Free Quote</span>
+                <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>
 
-            <p className="text-xs text-gray-400 text-center mt-4">
-              We&apos;ll get back to you within 2 hours during business hours
-            </p>
+            {/* Trust signals */}
+            <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-gray-100">
+              <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                <CheckCircle size={14} className="text-green-500" />
+                <span>2hr Response</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                <CheckCircle size={14} className="text-green-500" />
+                <span>No Obligation</span>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       )}
@@ -1026,16 +1034,15 @@ const HeroSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
               hands-on labs, and guaranteed exam readiness.
             </p>
 
-            {/* CTA Buttons */}
+            {/* Primary CTA */}
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <a href="#schedule" className="btn-primary text-lg px-8 py-4">
+              <button onClick={onOpenLeadForm} className="btn-primary text-lg px-10 py-4">
                 <Calendar size={20} />
-                View Training Schedule
-              </a>
-              <button onClick={onOpenLeadForm} className="btn-secondary text-lg px-8 py-4">
-                <MessageCircle size={20} />
-                Talk to an Advisor
+                Get Training Quote
               </button>
+              <a href="#schedule" className="btn-secondary text-lg px-8 py-4">
+                View Schedule
+              </a>
             </div>
 
             {/* Quick Stats Row */}
@@ -1841,28 +1848,29 @@ const LearningModesSection = ({ onRequestCustom }: { onRequestCustom: () => void
 };
 
 // CLC Section
-const CLCSection = () => {
+const CLCSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="enterprise" ref={ref} className="py-20 bg-white">
+    <section id="clc" ref={ref} className="py-16 bg-gradient-to-br from-[#0694D1]/5 via-white to-[#049FD9]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left - CLC Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <div className="clc-badge mb-6">
-              <CreditCard size={16} />
-              <span>Cisco Learning Credits Accepted</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#0694D1]/10 border border-[#0694D1]/20 rounded-full mb-6">
+              <CreditCard size={16} className="text-[#0694D1]" />
+              <span className="text-[#0694D1] font-medium text-sm">Cisco Learning Credits Accepted</span>
             </div>
 
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
               Master Cisco Certification
             </h2>
-            <h3 className="text-2xl lg:text-3xl font-semibold text-[#0694D1] mb-6">
+            <h3 className="text-xl lg:text-2xl font-semibold text-[#0694D1] mb-6">
               Through Cisco Learning Credits
             </h3>
 
@@ -1871,130 +1879,69 @@ const CLCSection = () => {
               for all authorized Cisco courses. Maximize your training investment with prepaid credits.
             </p>
 
-            <ul className="space-y-4 mb-8">
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
               {[
-                'Use CLCs to pay for any Cisco authorized course',
-                'Valid for 1 year from issue date',
-                'Use for ILT, virtual, or on-demand training',
-                'Team Captain approval workflow supported'
+                { text: 'Pay with CLCs for any course', icon: CheckCircle },
+                { text: 'Valid for 1 year from issue', icon: CheckCircle },
+                { text: 'ILT, virtual, or on-demand', icon: CheckCircle },
+                { text: 'Team Captain workflow', icon: CheckCircle }
               ].map((item, index) => (
-                <li key={index} className="flex items-center gap-3 text-gray-700">
-                  <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle size={14} className="text-green-600" />
-                  </div>
-                  {item}
-                </li>
+                <div key={index} className="flex items-center gap-3 text-gray-700">
+                  <item.icon size={18} className="text-green-500 flex-shrink-0" />
+                  <span className="text-sm">{item.text}</span>
+                </div>
               ))}
-            </ul>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="btn-primary">
-                <CreditCard size={18} />
-                Redeem CLCs Now
-              </button>
-              <button className="btn-secondary">
-                <BookOpen size={18} />
-                How CLCs Work
-              </button>
             </div>
+
+            <button onClick={onOpenLeadForm} className="btn-primary text-lg px-8 py-4">
+              <CreditCard size={20} />
+              Redeem Your CLCs
+            </button>
           </motion.div>
 
+          {/* Right - Quick Stats & Trust Signals */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative"
           >
-            <div className="card-elevated p-8 relative overflow-hidden">
-              {/* Premium indicator */}
-              <div className="absolute top-0 right-0 bg-gradient-to-l from-[#0694D1] to-[#049FD9] text-white text-xs font-semibold px-4 py-1.5 rounded-bl-lg">
-                Priority Response
+            <div className="card-elevated p-8">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center mx-auto mb-4">
+                  <Award size={32} className="text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Why Choose Koenig?</h3>
+                <p className="text-gray-500 text-sm">Official Cisco Platinum Learning Partner</p>
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center">
-                  <Building2 size={24} className="text-white" />
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="text-center p-4 bg-gray-50 rounded-xl">
+                  <div className="text-3xl font-bold text-[#0694D1]">32+</div>
+                  <div className="text-xs text-gray-500">Years Experience</div>
                 </div>
-                Enterprise Training
-              </h3>
-              <p className="text-gray-500 text-sm mb-6">Get a customized training proposal for your team</p>
-
-              <form className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    className="input"
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    className="input"
-                    required
-                  />
+                <div className="text-center p-4 bg-gray-50 rounded-xl">
+                  <div className="text-3xl font-bold text-[#0694D1]">100K+</div>
+                  <div className="text-xs text-gray-500">Professionals Trained</div>
                 </div>
-
-                <input
-                  type="email"
-                  placeholder="Work Email"
-                  className="input"
-                  required
-                />
-
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    placeholder="Company Name"
-                    className="input"
-                    required
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    className="input"
-                  />
+                <div className="text-center p-4 bg-gray-50 rounded-xl">
+                  <div className="text-3xl font-bold text-[#0694D1]">60+</div>
+                  <div className="text-xs text-gray-500">Countries Served</div>
                 </div>
-
-                <select className="input text-gray-500" required>
-                  <option value="">Team Size</option>
-                  <option value="2-5">2-5 learners</option>
-                  <option value="6-10">6-10 learners</option>
-                  <option value="11-25">11-25 learners</option>
-                  <option value="26-50">26-50 learners</option>
-                  <option value="50+">50+ learners</option>
-                </select>
-
-                <select className="input text-gray-500">
-                  <option value="">Payment Method</option>
-                  <option value="clc">Cisco Learning Credits (CLCs)</option>
-                  <option value="direct">Direct Payment / Invoice</option>
-                  <option value="po">Purchase Order</option>
-                </select>
-
-                <textarea
-                  placeholder="Which courses or certifications are you interested in? (Optional)"
-                  className="input min-h-[80px] resize-none"
-                  rows={3}
-                />
-
-                <button type="submit" className="btn-primary w-full text-lg py-4 group">
-                  <span>Get Custom Quote</span>
-                  <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </form>
-
-              <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <CheckCircle size={14} className="text-green-500" />
-                  <span>24hr Response</span>
+                <div className="text-center p-4 bg-gray-50 rounded-xl">
+                  <div className="text-3xl font-bold text-[#0694D1]">4.7★</div>
+                  <div className="text-xs text-gray-500">500+ Reviews</div>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <CheckCircle size={14} className="text-green-500" />
-                  <span>No Obligation</span>
+              </div>
+
+              <div className="flex items-center justify-center gap-6 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle size={16} className="text-green-500" />
+                  <span>Guaranteed to Run</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <CheckCircle size={14} className="text-green-500" />
-                  <span>CLCs Accepted</span>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle size={16} className="text-green-500" />
+                  <span>Hands-on Labs</span>
                 </div>
               </div>
             </div>
@@ -2088,39 +2035,38 @@ const CTASection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-20 hero-pattern relative overflow-hidden">
+    <section ref={ref} className="py-16 bg-gradient-to-r from-[#0694D1] to-[#0576A8] relative overflow-hidden">
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/3 translate-y-1/3" />
+      </div>
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            Ready to Advance Your Cisco Career?
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+            Ready to Get Cisco Certified?
           </h2>
-          <p className="text-xl text-gray-600 mb-10">
-            Join thousands of IT professionals who have accelerated their careers with Koenig&apos;s
-            expert-led Cisco certification training.
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            Get a personalized training quote. CLCs accepted. All dates guaranteed to run.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <a href="#schedule" className="btn-primary text-lg px-10 py-4">
-              <Calendar size={20} />
-              Browse Schedule
-            </a>
-            <button onClick={onOpenLeadForm} className="btn-secondary text-lg px-10 py-4">
-              <MessageCircle size={20} />
-              Talk to an Advisor
-            </button>
-          </div>
+          <button onClick={onOpenLeadForm} className="bg-white text-[#0694D1] font-semibold text-lg px-12 py-4 rounded-xl hover:bg-gray-50 transition-colors shadow-lg inline-flex items-center gap-2">
+            Get Your Free Quote
+            <ArrowRight size={20} />
+          </button>
 
-          {/* Contact Options */}
-          <div className="flex flex-wrap justify-center gap-8">
-            <a href="tel:+18046251567" className="flex items-center gap-2 text-gray-600 hover:text-[#0694D1] transition-colors">
-              <Phone size={18} className="text-[#0694D1]" />
+          {/* Contact info */}
+          <div className="flex flex-wrap justify-center gap-6 mt-8 text-white/80">
+            <a href="tel:+16048251567" className="flex items-center gap-2 hover:text-white transition-colors">
+              <Phone size={16} />
               <span>+1 (604) 825-1567</span>
             </a>
-            <a href="mailto:info@koenig-solutions.com" className="flex items-center gap-2 text-gray-600 hover:text-[#0694D1] transition-colors">
-              <Mail size={18} className="text-[#0694D1]" />
+            <a href="mailto:info@koenig-solutions.com" className="flex items-center gap-2 hover:text-white transition-colors">
+              <Mail size={16} />
               <span>info@koenig-solutions.com</span>
             </a>
           </div>
@@ -2314,16 +2260,14 @@ export default function CiscoTrainingLanding() {
     <main className="min-h-screen bg-white">
       <Header />
       <HeroSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
-      <CertificationPathway />
+      <CLCSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <ScheduleSection />
-      <LearningModesSection onRequestCustom={() => setIsCustomBatchModalOpen(true)} />
-      <CLCSection />
+      <CertificationPathway />
       <WhyKoenigSection />
       <CTASection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <Footer />
       <FloatingContact />
       <LeadFormModal isOpen={isLeadFormOpen} onClose={() => setIsLeadFormOpen(false)} />
-      <CustomBatchModal isOpen={isCustomBatchModalOpen} onClose={() => setIsCustomBatchModalOpen(false)} />
     </main>
   );
 }
