@@ -999,7 +999,7 @@ const Header = () => {
   );
 };
 
-// Hero Section
+// Hero Section - CLC Focus
 const HeroSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
   return (
     <section className="relative min-h-[70vh] flex items-center pt-8 overflow-hidden">
@@ -1007,7 +1007,7 @@ const HeroSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
-          {/* Left Content */}
+          {/* Left Content - CLC Focused */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1024,47 +1024,42 @@ const HeroSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
               </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-              Master Cisco
-              <span className="block text-[#0694D1]">Networking</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-2 leading-tight">
+              Master Cisco Certification
             </h1>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0694D1] mb-6">
+              Through Cisco Learning Credits
+            </h2>
 
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Expert-led CCNA, CCNP, and CCIE certification training with flexible scheduling,
-              hands-on labs, and guaranteed exam readiness.
+            <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+              As a Cisco Platinum Learning Partner, Koenig Solutions accepts Cisco Learning Credits (CLCs)
+              for all authorized Cisco courses. Maximize your training investment with prepaid credits.
             </p>
 
+            {/* CLC Benefits */}
+            <div className="grid sm:grid-cols-2 gap-3 mb-8">
+              {[
+                'Pay with CLCs for any course',
+                'Valid for 1 year from issue',
+                'ILT, virtual, or on-demand',
+                'Team Captain workflow'
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-2 text-gray-700">
+                  <CheckCircle size={18} className="text-green-500 flex-shrink-0" />
+                  <span className="text-sm">{item}</span>
+                </div>
+              ))}
+            </div>
+
             {/* Primary CTA */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row gap-4">
               <button onClick={onOpenLeadForm} className="btn-primary text-lg px-10 py-4">
-                <Calendar size={20} />
-                Get Training Quote
+                <CreditCard size={20} />
+                Redeem Your CLCs
               </button>
               <a href="#schedule" className="btn-secondary text-lg px-8 py-4">
                 View Schedule
               </a>
-            </div>
-
-            {/* Quick Stats Row */}
-            <div className="flex flex-wrap gap-6">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                  <CheckCircle size={20} className="text-green-600" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-gray-900">Guaranteed to Run</div>
-                  <div className="text-xs text-gray-500">All scheduled dates</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                  <CreditCard size={20} className="text-[#0694D1]" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-gray-900">CLCs Accepted</div>
-                  <div className="text-xs text-gray-500">Cisco Learning Credits</div>
-                </div>
-              </div>
             </div>
           </motion.div>
 
@@ -1847,104 +1842,94 @@ const LearningModesSection = ({ onRequestCustom }: { onRequestCustom: () => void
   );
 };
 
-// CLC Section
-const CLCSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
+// Networking Excellence Section (moved from hero)
+const NetworkingSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  const features = [
+    { icon: Award, text: 'Expert-led instruction' },
+    { icon: Calendar, text: 'Flexible scheduling' },
+    { icon: Target, text: 'Hands-on labs' },
+    { icon: BadgeCheck, text: 'Guaranteed exam readiness' }
+  ];
+
   return (
-    <section id="clc" ref={ref} className="py-16 bg-gradient-to-br from-[#0694D1]/5 via-white to-[#049FD9]/5">
+    <section id="networking" ref={ref} className="py-20 bg-gradient-to-br from-gray-50 via-white to-[#0694D1]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left - CLC Info */}
+          {/* Left - Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#0694D1]/10 border border-[#0694D1]/20 rounded-full mb-6">
-              <CreditCard size={16} className="text-[#0694D1]" />
-              <span className="text-[#0694D1] font-medium text-sm">Cisco Learning Credits Accepted</span>
+              <Network size={16} className="text-[#0694D1]" />
+              <span className="text-[#0694D1] font-medium text-sm">Cisco Certification Training</span>
             </div>
 
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-              Master Cisco Certification
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Master Cisco Networking
             </h2>
-            <h3 className="text-xl lg:text-2xl font-semibold text-[#0694D1] mb-6">
-              Through Cisco Learning Credits
-            </h3>
 
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              As a Cisco Platinum Learning Partner, Koenig Solutions accepts Cisco Learning Credits (CLCs)
-              for all authorized Cisco courses. Maximize your training investment with prepaid credits.
+              Expert-led CCNA, CCNP, and CCIE certification training with flexible scheduling,
+              hands-on labs, and guaranteed exam readiness. Join 100,000+ professionals who
+              have advanced their networking careers with Koenig Solutions.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
-              {[
-                { text: 'Pay with CLCs for any course', icon: CheckCircle },
-                { text: 'Valid for 1 year from issue', icon: CheckCircle },
-                { text: 'ILT, virtual, or on-demand', icon: CheckCircle },
-                { text: 'Team Captain workflow', icon: CheckCircle }
-              ].map((item, index) => (
+              {features.map((item, index) => (
                 <div key={index} className="flex items-center gap-3 text-gray-700">
-                  <item.icon size={18} className="text-green-500 flex-shrink-0" />
-                  <span className="text-sm">{item.text}</span>
+                  <div className="w-10 h-10 rounded-lg bg-[#0694D1]/10 flex items-center justify-center">
+                    <item.icon size={20} className="text-[#0694D1]" />
+                  </div>
+                  <span className="font-medium">{item.text}</span>
                 </div>
               ))}
             </div>
 
-            <button onClick={onOpenLeadForm} className="btn-primary text-lg px-8 py-4">
-              <CreditCard size={20} />
-              Redeem Your CLCs
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button onClick={onOpenLeadForm} className="btn-primary text-lg px-8 py-4">
+                <BookOpen size={20} />
+                Start Your Certification Journey
+              </button>
+              <a href="#schedule" className="btn-secondary text-lg px-6 py-4">
+                View Training Schedule
+              </a>
+            </div>
           </motion.div>
 
-          {/* Right - Quick Stats & Trust Signals */}
+          {/* Right - Certification Cards */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
+            className="grid gap-4"
           >
-            <div className="card-elevated p-8">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0694D1] to-[#0576A8] flex items-center justify-center mx-auto mb-4">
-                  <Award size={32} className="text-white" />
+            {[
+              { level: 'CCNA', title: 'Associate', desc: 'Foundation for networking careers', color: 'from-green-500 to-green-600' },
+              { level: 'CCNP', title: 'Professional', desc: 'Advanced routing & switching', color: 'from-blue-500 to-blue-600' },
+              { level: 'CCIE', title: 'Expert', desc: 'Elite network engineering', color: 'from-purple-500 to-purple-600' }
+            ].map((cert, index) => (
+              <motion.div
+                key={cert.level}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                className="card p-5 flex items-center gap-4 hover:shadow-lg transition-shadow"
+              >
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${cert.color} flex items-center justify-center`}>
+                  <span className="text-white font-bold text-sm">{cert.level}</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Why Choose Koenig?</h3>
-                <p className="text-gray-500 text-sm">Official Cisco Platinum Learning Partner</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <div className="text-3xl font-bold text-[#0694D1]">32+</div>
-                  <div className="text-xs text-gray-500">Years Experience</div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900">{cert.level} - {cert.title}</h3>
+                  <p className="text-sm text-gray-500">{cert.desc}</p>
                 </div>
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <div className="text-3xl font-bold text-[#0694D1]">100K+</div>
-                  <div className="text-xs text-gray-500">Professionals Trained</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <div className="text-3xl font-bold text-[#0694D1]">60+</div>
-                  <div className="text-xs text-gray-500">Countries Served</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-xl">
-                  <div className="text-3xl font-bold text-[#0694D1]">4.7★</div>
-                  <div className="text-xs text-gray-500">500+ Reviews</div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-center gap-6 pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle size={16} className="text-green-500" />
-                  <span>Guaranteed to Run</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle size={16} className="text-green-500" />
-                  <span>Hands-on Labs</span>
-                </div>
-              </div>
-            </div>
+                <ChevronRight size={20} className="text-gray-400" />
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
@@ -2260,9 +2245,9 @@ export default function CiscoTrainingLanding() {
     <main className="min-h-screen bg-white">
       <Header />
       <HeroSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
-      <CLCSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <ScheduleSection />
       <CertificationPathway />
+      <NetworkingSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <WhyKoenigSection />
       <CTASection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <Footer />
