@@ -1222,9 +1222,16 @@ const getQuickDateRange = (option: string): { start: Date; end: Date } | null =>
 };
 
 // Schedule Section
-const ScheduleSection = () => {
+const ScheduleSection = ({ externalLevelFilter }: { externalLevelFilter?: string }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedLevel, setSelectedLevel] = useState('All');
+
+  // Listen for external level filter changes
+  useEffect(() => {
+    if (externalLevelFilter && externalLevelFilter !== 'All') {
+      setSelectedLevel(externalLevelFilter);
+    }
+  }, [externalLevelFilter]);
   const [showCustomRequestModal, setShowCustomRequestModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
@@ -1843,7 +1850,7 @@ const LearningModesSection = ({ onRequestCustom }: { onRequestCustom: () => void
 };
 
 // Networking Excellence Section (moved from hero)
-const NetworkingSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) => {
+const NetworkingSection = ({ onOpenLeadForm, onSelectLevel }: { onOpenLeadForm: () => void; onSelectLevel: (level: string) => void }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -1853,6 +1860,18 @@ const NetworkingSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) =
     { icon: Target, text: 'Hands-on labs' },
     { icon: BadgeCheck, text: 'Guaranteed exam readiness' }
   ];
+
+  const certifications = [
+    { level: 'CCNA', filterLevel: 'Associate', title: 'Associate', desc: 'Foundation for networking careers', color: 'from-green-500 to-green-600' },
+    { level: 'CCNP', filterLevel: 'Professional', title: 'Professional', desc: 'Advanced routing & switching', color: 'from-blue-500 to-blue-600' },
+    { level: 'CCIE', filterLevel: 'Expert', title: 'Expert', desc: 'Elite network engineering', color: 'from-purple-500 to-purple-600' }
+  ];
+
+  const handleCertClick = (filterLevel: string) => {
+    onSelectLevel(filterLevel);
+    // Scroll to schedule section
+    document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section id="networking" ref={ref} className="py-20 bg-gradient-to-br from-gray-50 via-white to-[#0694D1]/5">
@@ -1890,35 +1909,27 @@ const NetworkingSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) =
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button onClick={onOpenLeadForm} className="btn-primary text-lg px-8 py-4">
-                <BookOpen size={20} />
-                Start Your Certification Journey
-              </button>
-              <a href="#schedule" className="btn-secondary text-lg px-6 py-4">
-                View Training Schedule
-              </a>
-            </div>
+            <button onClick={onOpenLeadForm} className="btn-primary text-lg px-8 py-4">
+              <BookOpen size={20} />
+              Start Your Certification Journey
+            </button>
           </motion.div>
 
-          {/* Right - Certification Cards */}
+          {/* Right - Certification Cards (Clickable) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="grid gap-4"
           >
-            {[
-              { level: 'CCNA', title: 'Associate', desc: 'Foundation for networking careers', color: 'from-green-500 to-green-600' },
-              { level: 'CCNP', title: 'Professional', desc: 'Advanced routing & switching', color: 'from-blue-500 to-blue-600' },
-              { level: 'CCIE', title: 'Expert', desc: 'Elite network engineering', color: 'from-purple-500 to-purple-600' }
-            ].map((cert, index) => (
-              <motion.div
+            {certifications.map((cert, index) => (
+              <motion.button
                 key={cert.level}
+                onClick={() => handleCertClick(cert.filterLevel)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                className="card p-5 flex items-center gap-4 hover:shadow-lg transition-shadow"
+                className="card p-5 flex items-center gap-4 hover:shadow-lg transition-all hover:scale-[1.02] cursor-pointer text-left w-full group"
               >
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${cert.color} flex items-center justify-center`}>
                   <span className="text-white font-bold text-sm">{cert.level}</span>
@@ -1927,9 +1938,10 @@ const NetworkingSection = ({ onOpenLeadForm }: { onOpenLeadForm: () => void }) =
                   <h3 className="font-semibold text-gray-900">{cert.level} - {cert.title}</h3>
                   <p className="text-sm text-gray-500">{cert.desc}</p>
                 </div>
-                <ChevronRight size={20} className="text-gray-400" />
-              </motion.div>
+                <ChevronRight size={20} className="text-gray-400 group-hover:text-[#0694D1] group-hover:translate-x-1 transition-all" />
+              </motion.button>
             ))}
+            <p className="text-sm text-gray-500 text-center mt-2">Click to view courses by certification level</p>
           </motion.div>
         </div>
       </div>
@@ -2240,14 +2252,18 @@ const FloatingContact = () => {
 export default function CiscoTrainingLanding() {
   const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
   const [isCustomBatchModalOpen, setIsCustomBatchModalOpen] = useState(false);
+  const [selectedLevelFilter, setSelectedLevelFilter] = useState('All');
 
   return (
     <main className="min-h-screen bg-white">
       <Header />
       <HeroSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
-      <ScheduleSection />
+      <ScheduleSection externalLevelFilter={selectedLevelFilter} />
       <CertificationPathway />
-      <NetworkingSection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
+      <NetworkingSection
+        onOpenLeadForm={() => setIsLeadFormOpen(true)}
+        onSelectLevel={setSelectedLevelFilter}
+      />
       <WhyKoenigSection />
       <CTASection onOpenLeadForm={() => setIsLeadFormOpen(true)} />
       <Footer />
